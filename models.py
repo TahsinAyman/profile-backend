@@ -17,8 +17,10 @@ class Authentication(db.Model):
     password = db.Column(db.String(50), nullable=False)
 
     def __str__(self):
-        return json.dumps(obj={"user": self.user, "password": hashlib.md5(self.password.encode()).hexdigest()}, indent=4)
-
+        # return json.dumps(obj={"user": self.user, "password": hashlib.md5(self.password.encode()).hexdigest()},
+        #                   indent=4)
+        return json.dumps(obj={"user": self.user, "password": self.password},
+                          indent=4)
 
 
 class Comment(db.Model):
@@ -30,6 +32,7 @@ class Comment(db.Model):
     def __str__(self):
         return json.dumps(obj={"id": self.id, "name": self.name, "comment": self.comment}, indent=4)
 
+
 class Certificates(db.Model):
     __tablename__ = "certificates"
     title = db.Column(db.String(50), nullable=False)
@@ -40,7 +43,10 @@ class Certificates(db.Model):
     link = db.Column(db.String(100), nullable=False)
 
     def __str__(self):
-        return json.dumps(obj={"title": self.title, "company": self.company, "birth": self.birth, "expiration": self.expiration, "credentialId": self.credentialId, "link": self.link}, indent=4)
+        return json.dumps(
+            obj={"title": self.title, "company": self.company, "birth": self.birth, "expiration": self.expiration,
+                 "credentialId": self.credentialId, "link": self.link}, indent=4)
+
 
 class Projects(db.Model):
     __tablename__ = "projects"
@@ -51,7 +57,33 @@ class Projects(db.Model):
     url = db.Column(db.String(50))
 
     def __str__(self):
-        return json.dumps({"id": self.id, "title": self.title, "company": self.company, "description": self.description, "url": self.url}, indent=4)
+        return json.dumps(
+            {"id": self.id, "title": self.title, "company": self.company, "description": self.description,
+             "url": self.url}, indent=4)
+
+
+class Content(db.Model):
+    __tablename__ = "content"
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(50), nullable=False)
+    description = db.Column(db.String(50), nullable=False)
+    thumbnail = db.Column(db.String(2000), nullable=False)
+    link = db.Column(db.String(2000), nullable=False)
+
+    def __str__(self):
+        return json.dumps(
+            obj={"id": self.id, "title": self.title, "description": self.description, "thumbnail": self.thumbnail,
+                 "link": self.link}, indent=4)
+
+
+class Gallery(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    caption = db.Column(db.String(200))
+    link = db.Column(db.String(2000), nullable=False)
+
+    def __str__(self):
+        return json.dumps(
+            obj={"id": self.id, "caption": self.caption, "link": self.link}, indent=4)
 
 
 if __name__ == '__main__':
